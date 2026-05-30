@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>福岡 5日4夜 · 2026.06</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600&family=Shippori+Mincho:wght@400;600;800&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f7f0e6;
+    --warm-white: #fdf8f2;
+    --sand: #e8d9c4;
+    --tan: #c9a882;
+    --brown: #8b6347;
+    --dark-brown: #4a3020;
+    --muted-red: #b85c4a;
+    --sage: #7a8c6e;
+    --ink: #2c2016;
+    --light-ink: #6b5744;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background-color: var(--cream); color: var(--ink); font-family: 'Noto Sans TC', sans-serif; font-weight: 300; line-height: 1.7; }
+
+  /* HEADER */
+  .site-header {
+    background: var(--dark-brown);
+    color: var(--cream);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .site-title { font-family: 'Shippori Mincho', serif; font-size: 28px; font-weight: 800; letter-spacing: 0.05em; }
+  .site-subtitle { font-size: 11px; letter-spacing: 0.2em; opacity: 0.6; margin-top: 2px; }
+  .flight-pills { display: flex; gap: 12px; flex-wrap: wrap; }
+  .flight-pill { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 3px; padding: 6px 14px; font-size: 11px; letter-spacing: 0.08em; line-height: 1.6; }
+  .flight-pill strong { display: block; font-size: 13px; font-family: 'Shippori Mincho', serif; }
+
+  /* TABS NAV */
+  .tabs-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,240,230,0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--sand);
+    display: flex; overflow-x: auto; scrollbar-width: none;
+  }
+  .tabs-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 14px 28px; border: none; background: none;
+    font-family: 'Noto Sans TC', sans-serif; font-size: 12px;
+    letter-spacing: 0.15em; color: var(--light-ink);
+    cursor: pointer; border-bottom: 2px solid transparent;
+    white-space: nowrap; transition: all 0.2s; flex-shrink: 0;
+  }
+  .tab-btn:hover { color: var(--brown); }
+  .tab-btn.active { color: var(--dark-brown); border-bottom-color: var(--brown); font-weight: 500; }
+
+  /* TAB PANELS */
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* CONTAINER */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+  /* ── FLIGHT TAB ── */
+  .flight-section { padding: 60px 0; }
+  .section-title { font-family: 'Shippori Mincho', serif; font-size: 26px; font-weight: 600; color: var(--dark-brown); margin-bottom: 32px; padding-bottom: 12px; border-bottom: 1px solid var(--sand); }
+  .flight-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .flight-table th { text-align: left; padding: 10px 16px; background: var(--dark-brown); color: var(--cream); font-size: 11px; letter-spacing: 0.15em; font-weight: 400; }
+  .flight-table td { padding: 14px 16px; border-bottom: 1px solid var(--sand); vertical-align: top; }
+  .flight-table tr:last-child td { border-bottom: none; }
+  .flight-table tr:hover td { background: var(--warm-white); }
+  .order-code { font-family: monospace; background: var(--sand); padding: 2px 8px; border-radius: 2px; font-size: 12px; color: var(--brown); }
+  .flight-arrow { color: var(--tan); font-size: 18px; margin: 0 8px; }
+
+  /* ── PREP TAB ── */
+  .prep-section { padding: 60px 0; }
+  .prep-note { background: var(--warm-white); border: 1px solid var(--sand); border-left: 3px solid var(--muted-red); padding: 16px 20px; margin-bottom: 32px; font-size: 13px; color: var(--light-ink); border-radius: 2px; }
+  .prep-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .prep-card { background: var(--warm-white); border: 1px solid var(--sand); border-radius: 4px; overflow: hidden; }
+  .prep-card-header { background: var(--dark-brown); color: var(--cream); padding: 12px 16px; font-size: 12px; letter-spacing: 0.15em; display: flex; align-items: center; gap: 8px; }
+  .prep-card-body { padding: 16px; }
+  .prep-item { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 1px solid rgba(232,217,196,0.5); font-size: 13px; color: var(--ink); }
+  .prep-item:last-child { border-bottom: none; }
+  .prep-item a { color: var(--muted-red); text-decoration: none; }
+  .prep-item a:hover { text-decoration: underline; }
+  .checkbox { width: 14px; height: 14px; border: 1px solid var(--tan); border-radius: 2px; flex-shrink: 0; margin-top: 3px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .checkbox.checked { background: var(--sage); border-color: var(--sage); }
+  .checkbox.checked::after { content: '✓'; color: white; font-size: 9px; }
+  .prep-warning { background: #fdf0ee; border: 1px solid #e8c4bc; border-radius: 3px; padding: 10px 14px; margin-bottom: 12px; font-size: 12px; color: var(--muted-red); }
+  .coupon-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; padding-top: 4px; }
+  .coupon-item { background: var(--sand); border-radius: 2px; padding: 6px 10px; font-size: 12px; text-align: center; color: var(--brown); }
+
+  /* ── ITINERARY TAB ── */
+  .days-subnav { background: var(--warm-white); border-bottom: 1px solid var(--sand); padding: 0 24px; display: flex; overflow-x: auto; scrollbar-width: none; }
+  .days-subnav::-webkit-scrollbar { display: none; }
+  .day-sub-btn { padding: 12px 20px; border: none; background: none; font-size: 11px; letter-spacing: 0.15em; color: var(--light-ink); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
+  .day-sub-btn:hover { color: var(--brown); }
+  .day-sub-btn.active { color: var(--dark-brown); border-bottom-color: var(--tan); font-weight: 500; }
+  .day-panel { display: none; }
+  .day-panel.active { display: block; }
+  .day-content { padding: 48px 0; }
+  .day-header { display: flex; align-items: flex-start; gap: 24px; margin-bottom: 40px; }
+  .day-number { font-family: 'Shippori Mincho', serif; font-size: 72px; font-weight: 800; color: var(--sand); line-height: 1; flex-shrink: 0; }
+  .day-info { padding-top: 10px; border-left: 3px solid var(--brown); padding-left: 20px; }
+  .day-title-text { font-family: 'Shippori Mincho', serif; font-size: 24px; font-weight: 600; color: var(--dark-brown); line-height: 1.3; margin-bottom: 6px; }
+  .day-desc { font-size: 13px; color: var(--light-ink); }
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before { content: ''; position: absolute; left: 7px; top: 12px; bottom: 12px; width: 1px; background: var(--sand); }
+  .timeline-item { position: relative; margin-bottom: 20px; }
+  .timeline-item::before { content: ''; position: absolute; left: -27px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--cream); border: 2px solid var(--brown); }
+  .timeline-time { font-size: 11px; letter-spacing: 0.15em; color: var(--brown); margin-bottom: 6px; font-weight: 500; }
+  .card { background: #ffffff; border: none; border-radius: 12px; padding: 20px 24px; position: relative; overflow: hidden; box-shadow: 0 2px 12px rgba(74,48,32,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(74,48,32,0.1); }
+  .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 4px 0 0 4px; }
+  .card.spot::before { background: var(--sage); }
+  .card.food::before { background: var(--muted-red); }
+  .card.transport::before { background: var(--brown); }
+  .card-type { font-size: 11px; letter-spacing: 0.15em; margin-bottom: 6px; font-weight: 400; color: var(--light-ink); }
+  .card.spot .card-type { color: var(--sage); }
+  .card.food .card-type { color: var(--muted-red); }
+  .card.transport .card-type { color: var(--brown); }
+  .card-title { font-family: 'Noto Serif TC', serif; font-size: 18px; font-weight: 600; color: var(--dark-brown); margin-bottom: 8px; line-height: 1.4; }
+  .card-body { font-size: 14px; color: var(--light-ink); line-height: 1.8; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+  .tag { font-size: 11px; letter-spacing: 0.05em; padding: 4px 12px; border-radius: 20px; background: var(--sand); color: var(--brown); }
+  .tag.elder { background: #e8f0e4; color: var(--sage); }
+  .tag.warning { background: #fceee8; color: var(--muted-red); }
+  .map-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 12px; font-size: 12px; letter-spacing: 0.05em; color: var(--brown); text-decoration: none; border: 1px solid var(--sand); padding: 5px 12px; border-radius: 6px; transition: all 0.2s; }
+  .map-link:hover { background: var(--sand); }
+  .map-link svg { width: 12px; height: 12px; flex-shrink: 0; }
+  .period-label { font-size: 12px; letter-spacing: 0.15em; color: var(--light-ink); margin-bottom: 16px; margin-top: 36px; font-weight: 400; }
+  .notes-box { background: var(--dark-brown); color: var(--cream); border-radius: 4px; padding: 28px 32px; margin: 48px 0 60px; }
+  .notes-box h3 { font-family: 'Shippori Mincho', serif; font-size: 20px; margin-bottom: 20px; letter-spacing: 0.1em; font-weight: 600; }
+  .notes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+  .note-item { border-left: 2px solid rgba(201,168,130,0.4); padding-left: 14px; }
+  .note-item h4 { font-size: 11px; letter-spacing: 0.2em; color: var(--tan); margin-bottom: 6px; text-transform: uppercase; }
+  .note-item p { font-size: 12px; opacity: 0.8; line-height: 1.8; }
+
+  /* ── TICKET CARDS ── */
+  .ticket-list { display: flex; flex-direction: column; gap: 14px; }
+  .ticket-card { background: var(--warm-white); border: 1px solid var(--sand); border-radius: 6px; display: flex; overflow: hidden; }
+  .ticket-direction { writing-mode: vertical-rl; text-orientation: mixed; padding: 16px 10px; font-size: 12px; letter-spacing: 0.2em; font-weight: 500; display: flex; align-items: center; justify-content: center; min-width: 36px; }
+  .ticket-direction.outbound { background: var(--dark-brown); color: var(--cream); }
+  .ticket-direction.return { background: var(--brown); color: var(--cream); }
+  .ticket-main { padding: 16px 20px; flex: 1; }
+  .ticket-route { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+  .ticket-airport { font-family: 'Shippori Mincho', serif; font-size: 18px; font-weight: 600; color: var(--dark-brown); }
+  .ticket-city { font-size: 12px; font-weight: 300; color: var(--light-ink); margin-left: 2px; font-family: 'Noto Sans TC', sans-serif; }
+  .ticket-time { font-family: 'Shippori Mincho', serif; font-size: 22px; font-weight: 600; color: var(--brown); }
+  .ticket-arrow { color: var(--tan); font-size: 16px; }
+  .ticket-meta { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .ticket-flight { font-size: 12px; color: var(--light-ink); background: var(--sand); padding: 2px 8px; border-radius: 2px; }
+  .ticket-day { font-size: 12px; color: var(--light-ink); }
+  .ticket-link { font-size: 11px; color: var(--brown); text-decoration: none; border-bottom: 1px solid var(--tan); }
+  .ticket-link:hover { color: var(--dark-brown); }
+
+  /* FOOTER */
+  footer { text-align: center; padding: 48px 20px; font-size: 11px; color: var(--tan); letter-spacing: 0.2em; border-top: 1px solid var(--sand); }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    .site-header { padding: 16px 20px; }
+    .site-title { font-size: 22px; }
+    .container { padding: 0 16px; }
+    .day-number { font-size: 52px; }
+    .notes-box { padding: 20px 18px; }
+    .expense-summary { gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div>
+    <div class="site-title">福岡 · 旅遊手冊</div>
+    <div class="site-subtitle">5日4夜 · 四人同遊 · 2026.06</div>
+  </div>
+  <div class="flight-pills">
+    <div class="flight-pill">
+      <strong>✈ IT720 去程</strong>
+      TPE 13:25 → FUK 16:55
+    </div>
+    <div class="flight-pill">
+      <strong>✈ AK1511 回程</strong>
+      FUK 16:20 → TPE 17:50
+    </div>
+  </div>
+</header>
+
+<!-- TABS NAV -->
+<nav class="tabs-nav">
+  <button class="tab-btn active" onclick="switchTab('flight', this)">✈ 機票資訊</button>
+  <button class="tab-btn" onclick="switchTab('prep', this)">📋 行前準備</button>
+  <button class="tab-btn" onclick="switchTab('itinerary', this)">🗾 行程</button>
+</nav>
+
+<!-- ══════════════════════════════════════
+     TAB 1: 機票資訊
+══════════════════════════════════════ -->
+<div class="tab-panel active" id="tab-flight">
+<div class="container">
+<div class="flight-section">
+
+  <div class="section-title">機票資訊</div>
+  <div class="ticket-list">
+
+    <div class="ticket-card">
+      <div class="ticket-direction outbound">去程</div>
+      <div class="ticket-main">
+        <div class="ticket-route">
+          <span class="ticket-airport">TPE <span class="ticket-city">桃園</span></span>
+          <span class="ticket-time">13:25</span>
+          <span class="ticket-arrow">→</span>
+          <span class="ticket-time">16:55</span>
+          <span class="ticket-airport">FUK <span class="ticket-city">福岡</span></span>
+        </div>
+        <div class="ticket-meta">
+          <span class="ticket-flight">台灣虎航 IT720</span>
+          <span class="ticket-day">Day 1 · 06/09（二）</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket-card">
+      <div class="ticket-direction return">回程</div>
+      <div class="ticket-main">
+        <div class="ticket-route">
+          <span class="ticket-airport">FUK <span class="ticket-city">福岡</span></span>
+          <span class="ticket-time">16:20</span>
+          <span class="ticket-arrow">→</span>
+          <span class="ticket-time">17:50</span>
+          <span class="ticket-airport">TPE <span class="ticket-city">桃園</span></span>
+        </div>
+        <div class="ticket-meta">
+          <span class="ticket-flight">AirAsia AK1511</span>
+          <span class="ticket-day">Day 5 · 06/13（六）</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:40px">
+    <div class="section-title">特急列車（由布院）</div>
+    <div class="ticket-list">
+
+      <div class="ticket-card">
+        <div class="ticket-direction outbound">去程</div>
+        <div class="ticket-main">
+          <div class="ticket-route">
+            <span class="ticket-airport">博多</span>
+            <span class="ticket-time">07:43</span>
+            <span class="ticket-arrow">→</span>
+            <span class="ticket-time">10:02</span>
+            <span class="ticket-airport">由布院</span>
+          </div>
+          <div class="ticket-meta">
+            <span class="ticket-flight">ゆふ1號</span>
+            <span class="ticket-day">Day 4 · 已訂票 ✓ · NT$5,316 · 4人</span>
+            <a href="https://www.klook.com/zh-TW/notice_content/27255/?spm=MobilityPTP_BookingDetail.Pickup_Info_Expanded.GetDirections&clickId=e72c495458" target="_blank" class="ticket-link">Klook 領取流程 →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="ticket-card">
+        <div class="ticket-direction return">回程</div>
+        <div class="ticket-main">
+          <div class="ticket-route">
+            <span class="ticket-airport">由布院</span>
+            <span class="ticket-time">15:56</span>
+            <span class="ticket-arrow">→</span>
+            <span class="ticket-time">18:10</span>
+            <span class="ticket-airport">博多</span>
+          </div>
+          <div class="ticket-meta">
+            <span class="ticket-flight">由布院之森4號</span>
+            <span class="ticket-day">Day 4 · 已訂票 ✓ · NT$5,280 · 4人</span>
+            <a href="https://www.klook.com/zh-TW/notice_content/27255/?spm=MobilityPTP_BookingDetail.Pickup_Info_Expanded.GetDirections&clickId=e72c495458" target="_blank" class="ticket-link">Klook 領取流程 →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TAB 2: 行前準備
+══════════════════════════════════════ -->
+<div class="tab-panel" id="tab-prep">
+<div class="container">
+<div class="prep-section">
+  <div class="section-title">行前準備</div>
+  <div class="prep-note">☝ 電池類隨身攜帶・尖銳物品請託運</div>
+
+  <div class="prep-grid">
+
+    <!-- 住宿 -->
+    <div class="prep-card">
+      <div class="prep-card-header">🏨 住宿</div>
+      <div class="prep-card-body">
+        <div class="prep-warning">⚠️ 大多房間需要在3月前進行主動付款，需要注意。</div>
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>確認住宿付款狀態</span></div>
+      </div>
+    </div>
+
+    <!-- 餐廳預約 -->
+    <div class="prep-card">
+      <div class="prep-card-header">🍽 餐廳預約</div>
+      <div class="prep-card-body">
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>炉端ノいとおかし（Day 2 早餐）</span></div>
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>坐離宮 博多本店（Day 3 晚餐）</span></div>
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>博多牛雜鍋前田屋（Day 4 晚餐）</span></div>
+      </div>
+    </div>
+
+    <!-- 旅遊用品 -->
+    <div class="prep-card">
+      <div class="prep-card-header">🎒 旅遊用品</div>
+      <div class="prep-card-body">
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>朱印帳</span></div>
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>eSIM</span></div>
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>太陽眼鏡</span></div>
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>護照 ／ 駕照 ／ 日文譯本</span></div>
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>簽證 <a href="https://www.vjw.digital.go.jp/main/#/vjwplo001" target="_blank">VJW 申請 →</a></span></div>
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>信用卡 ／ 西瓜卡儲值</span></div>
+      </div>
+    </div>
+
+    <!-- 衛生用品 -->
+    <div class="prep-card">
+      <div class="prep-card-header">🧴 衛生用品</div>
+      <div class="prep-card-body">
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>衛生紙 ／ 濕紙巾 ／ 牙膏牙刷</span></div>
+      </div>
+    </div>
+
+    <!-- 電器用品 -->
+    <div class="prep-card">
+      <div class="prep-card-header">🔌 電器用品</div>
+      <div class="prep-card-body">
+        <div class="prep-item"><div class="checkbox" onclick="toggleCheck(this)"></div><span>手機 ／ 相機 ／ 手錶 ／ 行動電源</span></div>
+      </div>
+    </div>
+
+    <!-- 信用卡 Coupon -->
+    <div class="prep-card">
+      <div class="prep-card-header">💳 信用卡 / Coupon</div>
+      <div class="prep-card-body">
+        <div class="coupon-grid">
+          <div class="coupon-item">AEON</div>
+          <div class="coupon-item">DONKI</div>
+          <div class="coupon-item">大國</div>
+          <div class="coupon-item">松本清</div>
+          <div class="coupon-item">BicCamera</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</div>
+</div>
+
+<!-- ══════════════════════════════════════
+     TAB 3: 行程
+══════════════════════════════════════ -->
+<div class="tab-panel" id="tab-itinerary">
+  <div class="days-subnav">
+    <button class="day-sub-btn active" onclick="switchDay('day1', this)">Day 1 · 抵達</button>
+    <button class="day-sub-btn" onclick="switchDay('day2', this)">Day 2 · 太宰府</button>
+    <button class="day-sub-btn" onclick="switchDay('day3', this)">Day 3 · 天神</button>
+    <button class="day-sub-btn" onclick="switchDay('day4', this)">Day 4 · 由布院</button>
+    <button class="day-sub-btn" onclick="switchDay('day5', this)">Day 5 · 返程</button>
+  </div>
+
+  <div class="container">
+
+    <!-- DAY 1 -->
+    <div class="day-panel active" id="day1">
+    <div class="day-content">
+      <div class="day-header">
+        <div class="day-number">01</div>
+        <div class="day-info">
+          <div class="day-title-text">抵達福岡<br>天神・中洲初探</div>
+          <div class="day-desc">傍晚落地，輕鬆入門</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="period-label">下午</div>
+        <div class="timeline-item">
+          <div class="timeline-time">16:55</div>
+          <div class="card transport">
+            <div class="card-type">交通</div>
+            <div class="card-title">抵達福岡機場 FUK</div>
+            <div class="card-body">IT720 落地後入境、取行李，搭地鐵空港線約 5 分鐘即達博多站或天神站。建議先 check-in 飯店放行李再出門。</div>
+            <div class="card-tags"><span class="tag">地鐵空港線</span><span class="tag">5分鐘至博多</span></div>
+          </div>
+        </div>
+        <div class="period-label">晚上</div>
+        <div class="timeline-item">
+          <div class="timeline-time">18:30 起</div>
+          <div class="card spot">
+            <div class="card-type">散步</div>
+            <div class="card-title">天神・中洲 夜間漫步</div>
+            <div class="card-body">天神地下街連通大丸、三越等百貨，雨天也不怕。中洲是福岡最熱鬧的夜晚地帶，沿那珂川河畔逛逛，感受博多的夜晚氣息。</div>
+            <div class="card-tags"><span class="tag">天神地下街</span><span class="tag">中洲川端</span><span class="tag elder">長者友善</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="card food">
+            <div class="card-type">晚餐</div>
+            <div class="card-title">かわ屋 祇園店</div>
+            <div class="card-body">博多名物雞皮串燒，外皮烤得酥脆、內裡軟嫩。</div>
+            <div class="card-tags"><span class="tag">串燒</span><span class="tag">雞皮</span><span class="tag warning">19:00後僅現場</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/かわ屋+祇園店+福岡" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- DAY 2 -->
+    <div class="day-panel" id="day2">
+    <div class="day-content">
+      <div class="day-header">
+        <div class="day-number">02</div>
+        <div class="day-info">
+          <div class="day-title-text">太宰府天滿宮<br>竈門神社・櫛田神社</div>
+          <div class="day-desc">文化與信仰之旅，神社巡禮</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="period-label">早餐</div>
+        <div class="timeline-item">
+          <div class="card food">
+            <div class="card-type">早餐</div>
+            <div class="card-title">炉端ノいとおかし</div>
+            <div class="card-body">完全預約制，日式早餐氛圍佳，出發前悠閒享用。</div>
+            <div class="card-tags"><span class="tag">早餐</span><span class="tag warning">完全預約制</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/炉端ノいとおかし+福岡" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="period-label">上午</div>
+        <div class="timeline-item">
+          <div class="timeline-time">09:00</div>
+          <div class="card transport">
+            <div class="card-type">交通</div>
+            <div class="card-title">天神 → 太宰府</div>
+            <div class="card-body">西鐵天神站搭特急，約 25 分鐘抵達西鐵太宰府站。建議早點出發，避開午後人潮。</div>
+            <div class="card-tags"><span class="tag">西鐵電車</span><span class="tag">約25分鐘</span></div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">09:30</div>
+          <div class="card spot">
+            <div class="card-type">景點</div>
+            <div class="card-title">太宰府天滿宮</div>
+            <div class="card-body">供奉學問之神菅原道真，參道兩旁必吃現烤梅枝餅。旁邊九州國立博物館為室內展覽，夏天可進去吹冷氣休息。</div>
+            <div class="card-tags"><span class="tag">免費參拜</span><span class="tag">梅枝餅</span><span class="tag elder">步道平緩</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/太宰府天滿宮" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="period-label">下午</div>
+        <div class="timeline-item">
+          <div class="timeline-time">13:30</div>
+          <div class="card spot">
+            <div class="card-type">景點</div>
+            <div class="card-title">寶滿宮 竈門神社</div>
+            <div class="card-body">位於寶滿山山腰，以結緣聞名，近年因鬼滅之刃聖地人氣大增。從太宰府站搭接駁巴士約 10 分鐘可抵，建議長者搭巴士，勿嘗試徒步上山。</div>
+            <div class="card-tags"><span class="tag">結緣神社</span><span class="tag">巴士接駁</span><span class="tag warning">避免長者步行上山</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/竈門神社+太宰府" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">16:30</div>
+          <div class="card spot">
+            <div class="card-type">景點 · 回程順路</div>
+            <div class="card-title">櫛田神社</div>
+            <div class="card-body">博多總鎮守，從太宰府返回福岡市區後順路參拜。搭地鐵七隈線至「櫛田神社前站」步行 2 分鐘。境內有博多祇園山笠的大型飾山笠可欣賞。</div>
+            <div class="card-tags"><span class="tag">博多總鎮守</span><span class="tag">飾山笠</span><span class="tag elder">平地步行</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/櫛田神社+博多" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="period-label">晚餐</div>
+        <div class="timeline-item">
+          <div class="card food">
+            <div class="card-type">晚餐</div>
+            <div class="card-title">中州屋台</div>
+            <div class="card-body">福岡獨有的屋台文化，在中州那珂川邊的攤位坐下來吃。豚骨拉麵、烤物、關東煮都有。長者建議 18:00 前去卡位。</div>
+            <div class="card-tags"><span class="tag">屋台</span><span class="tag">豚骨拉麵</span><span class="tag warning">建議早去排</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/中洲+屋台+福岡" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- DAY 3 -->
+    <div class="day-panel" id="day3">
+    <div class="day-content">
+      <div class="day-header">
+        <div class="day-number">03</div>
+        <div class="day-info">
+          <div class="day-title-text">大濠公園<br>天神・今泉街區</div>
+          <div class="day-desc">自然散策與城市購物</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="period-label">上午</div>
+        <div class="timeline-item">
+          <div class="timeline-time">09:30</div>
+          <div class="card spot">
+            <div class="card-type">景點</div>
+            <div class="card-title">大濠公園</div>
+            <div class="card-body">福岡市中心的大型湖畔公園。可租天鵝造型腳踏船，湖中有小島和橋梁，景色絕美。公園內有 Starbucks 湖景座位可坐下休息。</div>
+            <div class="card-tags"><span class="tag">天鵝船</span><span class="tag">湖畔散步</span><span class="tag elder">地形平坦</span><span class="tag">免費入場</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/大濠公園+福岡" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="period-label">下午</div>
+        <div class="timeline-item">
+          <div class="timeline-time">13:00</div>
+          <div class="card spot">
+            <div class="card-type">景點 · 順路</div>
+            <div class="card-title">警固神社</div>
+            <div class="card-body">天神正中心的神社，與購物商圈共存，步行即達。以厄除、強運聞名，博多織御守設計獨特。</div>
+            <div class="card-tags"><span class="tag">厄除</span><span class="tag">天神步行可達</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/警固神社+天神" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">14:00</div>
+          <div class="card spot">
+            <div class="card-type">購物</div>
+            <div class="card-title">天神地面街區 · PARCO福岡</div>
+            <div class="card-body">今泉：獨立選品店、咖啡廳聚集。薬院：更在地，觀光客少。天神西通り：精品與咖啡廳林立。PARCO：年輕品牌聚集。</div>
+            <div class="card-tags"><span class="tag">今泉</span><span class="tag">薬院</span><span class="tag">PARCO</span><span class="tag elder">長者可隨時坐下休息</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/PARCO+福岡+天神" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="period-label">晚餐</div>
+        <div class="timeline-item">
+          <div class="card food">
+            <div class="card-type">晚餐</div>
+            <div class="card-title">坐離宮 博多本店</div>
+            <div class="card-body">精緻和食，適合在輕鬆逛街後好好坐下用餐。建議提前訂位，避免等待。</div>
+            <div class="card-tags"><span class="tag">和食</span><span class="tag warning">建議訂位</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/坐離宮+博多本店" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- DAY 4 -->
+    <div class="day-panel" id="day4">
+    <div class="day-content">
+      <div class="day-header">
+        <div class="day-number">04</div>
+        <div class="day-info">
+          <div class="day-title-text">由布院一日</div>
+          <div class="day-desc">溫泉鄉 · 金鱗湖 · 由布院之森</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="period-label">早上</div>
+        <div class="timeline-item">
+          <div class="timeline-time">07:43</div>
+          <div class="card transport">
+            <div class="card-type">交通 · 已訂票</div>
+            <div class="card-title">博多 → 由布院 · ゆふ1號</div>
+            <div class="card-body">博多站 07:43 發車，10:02 抵達由布院。特急ゆふ1號，指定席，全程約 2 小時 19 分。建議 07:20 前到博多站月台。</div>
+            <div class="card-tags"><span class="tag">特急ゆふ</span><span class="tag">已訂票 ✓</span><span class="tag warning">請提早到月台</span></div>
+            <a class="map-link" href="https://www.klook.com/zh-TW/notice_content/27255/?spm=MobilityPTP_BookingDetail.Pickup_Info_Expanded.GetDirections&clickId=e72c495458" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Klook 領取流程</a>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-time">10:00</div>
+          <div class="card spot">
+            <div class="card-type">景點</div>
+            <div class="card-title">由布院散策</div>
+            <div class="card-body">金鱗湖：由布院最知名地標。湯の坪街道：從車站步行至金鱗湖沿途，咖啡廳、工藝品店、甜點店密集。建議節奏放慢，多坐下來喝茶休息。</div>
+            <div class="card-tags"><span class="tag">金鱗湖</span><span class="tag">湯の坪街道</span><span class="tag elder">步道平緩</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/金鱗湖+由布院" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="period-label">下午</div>
+        <div class="timeline-item">
+          <div class="timeline-time">15:30</div>
+          <div class="card transport">
+            <div class="card-type">交通 · 已訂票</div>
+            <div class="card-title">由布院 → 博多 · 由布院之森4號</div>
+            <div class="card-body">由布院站 15:56 發車，18:10 抵達博多。觀光列車，木質車廂，車內有販賣部，建議購買由布院限定便當在車上享用。15:30 前請抵達由布院站。</div>
+            <div class="card-tags"><span class="tag">由布院之森4號</span><span class="tag">已訂票 ✓</span><span class="tag">NT$5,280 · 4人</span></div>
+            <a class="map-link" href="https://www.klook.com/zh-TW/notice_content/27255/?spm=MobilityPTP_BookingDetail.Pickup_Info_Expanded.GetDirections&clickId=e72c495458" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Klook 領取流程</a>
+          </div>
+        </div>
+        <div class="period-label">晚餐</div>
+        <div class="timeline-item">
+          <div class="timeline-time">18:30</div>
+          <div class="card food">
+            <div class="card-type">晚餐</div>
+            <div class="card-title">博多牛雜鍋前田屋 中洲川端店</div>
+            <div class="card-body">牛雜鍋（もつ鍋）是福岡名物，熱呼呼非常適合長者。中洲川端站附近，交通方便。</div>
+            <div class="card-tags"><span class="tag">牛雜鍋</span><span class="tag">福岡名物</span><span class="tag elder">適合長者</span><span class="tag warning">建議訂位</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/前田屋+牛雜鍋+中洲川端" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- DAY 5 -->
+    <div class="day-panel" id="day5">
+    <div class="day-content">
+      <div class="day-header">
+        <div class="day-number">05</div>
+        <div class="day-info">
+          <div class="day-title-text">博多站・返程</div>
+          <div class="day-desc">最後的伴手禮採買，從容返台</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="period-label">上午</div>
+        <div class="timeline-item">
+          <div class="timeline-time">10:00</div>
+          <div class="card spot">
+            <div class="card-type">購物</div>
+            <div class="card-title">博多站周邊百貨</div>
+            <div class="card-body">博多阪急、AMU PLAZA 博多集中在車站內外，一站式採購超方便。POKEMON CENTER FUKUOKA 也在附近，各式土產、零食、藥妝一次搞定。</div>
+            <div class="card-tags"><span class="tag">博多阪急</span><span class="tag">AMU PLAZA</span><span class="tag">Pokemon Center</span></div>
+            <a class="map-link" href="https://www.google.com/maps/search/博多駅" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>Google Maps</a>
+          </div>
+        </div>
+        <div class="period-label">下午</div>
+        <div class="timeline-item">
+          <div class="timeline-time">13:00</div>
+          <div class="card transport">
+            <div class="card-type">⚠ 重要</div>
+            <div class="card-title">出發前往福岡機場</div>
+            <div class="card-body">16:20 起飛，建議 13:30 前離開博多站。地鐵空港線 博多站 → 福岡空港站約 5 分鐘。AirAsia 建議提前 2 小時辦理登機，14:00 前抵達機場最安心。</div>
+            <div class="card-tags"><span class="tag warning">13:30前出發</span><span class="tag">地鐵5分鐘</span><span class="tag">AK1511 16:20起飛</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    </div>
+
+  </div><!-- /container -->
+</div>
+
+<!-- ══════════════════════════════════════
+     TAB 4: 消費紀錄
+══════════════════════════════════════ -->
+<footer></footer>
+
+<script>
+// ── TAB SWITCHING ──
+function switchTab(name, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+  if (name === 'expense') loadExpenses();
+}
+
+// ── DAY SWITCHING ──
+function switchDay(id, btn) {
+  document.querySelectorAll('.day-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.day-sub-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── CHECKBOX ──
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+}
+
+</script>
+</body>
+</html>
